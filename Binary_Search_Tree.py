@@ -9,11 +9,11 @@ class Binary_Search_Tree:
 
     def __init__(self, value):
       self._value = value
-      # TODO complete Node initialization
+      self._left = None
+      self._right = None
 
   def __init__(self):
     self._root = None
-    # TODO complete initialization
 
   def insert_element(self, value):
     # Insert the value specified into the tree at the correct
@@ -21,7 +21,23 @@ class Binary_Search_Tree:
     # search tree ordering. Your solution must be recursive.
     # This will involve the introduction of additional private
     # methods to support the recursion control variable.
-    pass # TODO replace pass with your implementation
+    if self._root is None:
+      newNode = self._BST_Node(value)
+      self._root = newNode
+    else:
+      self._insert_rec(self._root, value)
+
+
+  def _insert_rec(self, node, value):
+    if node is None:
+       return self._BST_Node(value)
+    value_at_node = node._value
+    if value < value_at_node:
+      node._left = self._insert_rec(node._left, value)
+    elif value > value_at_node:
+      node._right = self._insert_rec(node._right, value)
+
+
 
   def remove_element(self, value):
     # Remove the value specified from the tree. Select the minimum
@@ -42,7 +58,24 @@ class Binary_Search_Tree:
     # Your solution must be recursive. This will involve the introduction
     # of additional private methods to support the recursion control 
     # variable.
-    pass # TODO replace pass with your implementation
+    str = "[ "
+    str += self._in_order_rec(self._root)
+    str = str[:-2]
+    str += " ]"
+    return str
+
+  def _in_order_rec(self, node):
+    if node is None:
+      return ""
+    result = ""
+    value_left = self._in_order_rec(node._left)
+    if value_left != "":
+      result += value_left
+    result += str(node._value) + ", "
+    value_right = self._in_order_rec(node._right)
+    if value_right != "":
+      result += value_right
+    return result
 
   def pre_order(self):
     # Construct an return a string representing the pre-order
@@ -73,3 +106,7 @@ class Binary_Search_Tree:
   def __str__(self):
     return self.in_order()
 
+sb = Binary_Search_Tree()
+sb.insert_element(6)
+sb.insert_element(4)
+print(sb.in_order())
