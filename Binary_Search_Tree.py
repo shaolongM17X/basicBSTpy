@@ -116,7 +116,28 @@ class Binary_Search_Tree:
     # Your solution must be recursive. This will involve the introduction
     # of additional private methods to support the recursion control 
     # variable.
-    pass # TODO replace pass with your implementation
+    if self._root is None:
+      return "[ ]"
+    else:
+      str = "[ "
+      str += self._pre_order_rec(self._root)
+      str = str[:-2]
+      str += " ]"
+      return str
+
+  def _pre_order_rec(self, node):
+    if node is None:
+      return ""
+    result = ""
+    result += str(node._value) + ", "
+    value_left = self._pre_order_rec(node._left)
+    if value_left != "":
+      result += value_left
+    value_right = self._pre_order_rec(node._right)
+    if value_right != "":
+      result += value_right
+    return result
+
 
   def post_order(self):
     # Construct an return a string representing the post-order
@@ -126,7 +147,26 @@ class Binary_Search_Tree:
     # Your solution must be recursive. This will involve the introduction
     # of additional private methods to support the recursion control 
     # variable.
-    pass # TODO replace pass with your implementation
+    if self._root is None:
+      return "[ ]"
+    else:
+      str = "[ "
+      str += self._post_order_rec(self._root)
+      str = str[:-2]
+      str += " ]"
+      return str
+  def _post_order_rec(self, node):
+    if node is None:
+      return ""
+    result = ""
+    value_left = self._post_order_rec(node._left)
+    if value_left != "":
+      result += value_left
+    value_right = self._post_order_rec(node._right)
+    if value_right != "":
+      result += value_right
+    result += str(node._value) + ", "
+    return result
 
   def get_height(self):
     # return an integer that represents the height of the tree.
@@ -146,25 +186,3 @@ class Binary_Search_Tree:
 
   def __str__(self):
     return self.in_order()
-
-sb = Binary_Search_Tree()
-sb.insert_element(8)
-sb.insert_element(3)
-sb.insert_element(1)
-sb.insert_element(6)
-sb.insert_element(4)
-sb.insert_element(7)
-sb.insert_element(10)
-sb.insert_element(14)
-sb.insert_element(13)
-sb.remove_element(8)
-sb.remove_element(4)
-sb.remove_element(7)
-sb.remove_element(10)
-sb.remove_element(13)
-sb.remove_element(14)
-sb.remove_element(6)
-sb.remove_element(1)
-sb.remove_element(3)
-print(sb.in_order())
-print(sb.get_height())
