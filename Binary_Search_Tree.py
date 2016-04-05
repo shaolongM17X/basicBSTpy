@@ -36,6 +36,7 @@ class Binary_Search_Tree:
       node._left = self._insert_rec(node._left, value)
     elif value > value_at_node:
       node._right = self._insert_rec(node._right, value)
+    return node
 
 
 
@@ -107,6 +108,14 @@ class Binary_Search_Tree:
     return self.in_order()
 
 sb = Binary_Search_Tree()
-sb.insert_element(6)
-sb.insert_element(4)
+sb.insert_element(-3)
+sb.insert_element(-7)
+sb.insert_element(-6)
+# print(sb._root._left._value)
+sb.insert_element(-4)
+sb.insert_element(-8)
+sb.insert_element(-9)
+sb.insert_element(-10)
+sb.insert_element(-2)
+sb.insert_element(-1)
 print(sb.in_order())
