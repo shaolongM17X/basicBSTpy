@@ -132,7 +132,17 @@ class Binary_Search_Tree:
     # return an integer that represents the height of the tree.
     # assume that an empty tree has height 0 and a tree with one
     # node has height 1. This method must operate in constant time.
-    pass # TODO replace pass with your implementation
+    if self._root is None:
+      return 0
+    return self._get_height_rec(self._root)
+  def _get_height_rec(self, node):
+    if node is None:
+      return 0
+    else:
+      left_height = self._get_height_rec(node._left)
+      right_height = self._get_height_rec(node._right)
+      return 1 + max(left_height, right_height)
+
 
   def __str__(self):
     return self.in_order()
@@ -147,5 +157,14 @@ sb.insert_element(7)
 sb.insert_element(10)
 sb.insert_element(14)
 sb.insert_element(13)
+sb.remove_element(8)
+sb.remove_element(4)
+sb.remove_element(7)
+sb.remove_element(10)
+sb.remove_element(13)
+sb.remove_element(14)
+sb.remove_element(6)
+sb.remove_element(1)
 sb.remove_element(3)
 print(sb.in_order())
+print(sb.get_height())
