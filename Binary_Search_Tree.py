@@ -49,7 +49,34 @@ class Binary_Search_Tree:
     # implementations). Your solution must be recursive. 
     # This will involve the introduction of additional private
     # methods to support the recursion control variable.
-    pass # TODO replace pass with your implementation
+    self._root = self._remove_rec(self._root, value)
+
+  def _remove_rec(self, node, value):
+    if node is None:
+      return node
+    value_at_node = node._value
+    if value < value_at_node:
+      node._left = self._remove_rec(node._left, value)
+    elif value > value_at_node:
+      node._right = self._remove_rec(node._right, value)
+    else:
+      # if this node has two children
+      if node._left is not None and node._right is not None:
+        node._value = self._find_min(node._right)
+        node._right = self._remove_rec(node._right, node._value)
+      elif node._left is not None:
+        # this node has only left child
+        return node._left
+      else:
+        # this node has only right child or no child
+        return node._right
+    return node
+
+  # Helper method used in remove_rec to find the minimum value in the right subtree of a node having two children
+  def _find_min(self, node):
+    while node._left is not None:
+      node = node._left
+    return node._value
 
   def in_order(self):
     # Construct and return a string representing the in-order
@@ -61,7 +88,10 @@ class Binary_Search_Tree:
     # variable.
     str = "[ "
     str += self._in_order_rec(self._root)
-    str = str[:-2]
+    if self._root is not None:
+      str = str[:-2]
+    else:
+      return "[ ]"
     str += " ]"
     return str
 
@@ -108,14 +138,14 @@ class Binary_Search_Tree:
     return self.in_order()
 
 sb = Binary_Search_Tree()
-sb.insert_element(-3)
-sb.insert_element(-7)
-sb.insert_element(-6)
-# print(sb._root._left._value)
-sb.insert_element(-4)
-sb.insert_element(-8)
-sb.insert_element(-9)
-sb.insert_element(-10)
-sb.insert_element(-2)
-sb.insert_element(-1)
+sb.insert_element(8)
+sb.insert_element(3)
+sb.insert_element(1)
+sb.insert_element(6)
+sb.insert_element(4)
+sb.insert_element(7)
+sb.insert_element(10)
+sb.insert_element(14)
+sb.insert_element(13)
+sb.remove_element(3)
 print(sb.in_order())
