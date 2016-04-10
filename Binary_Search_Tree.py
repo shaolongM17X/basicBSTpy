@@ -11,6 +11,7 @@ class Binary_Search_Tree:
       self._value = value
       self._left = None
       self._right = None
+      self._height = 0
 
   def __init__(self):
     self._root = None
@@ -21,24 +22,34 @@ class Binary_Search_Tree:
     # search tree ordering. Your solution must be recursive.
     # This will involve the introduction of additional private
     # methods to support the recursion control variable.
-    if self._root is None:
-      newNode = self._BST_Node(value)
-      self._root = newNode
-    else:
-      self._insert_rec(self._root, value)
+    self._root = self._insert_rec(self._root, value)
 
 
   def _insert_rec(self, node, value):
     if node is None:
-       return self._BST_Node(value)
+      newNode = self._BST_Node(value)
+      newNode._height = 1
+      return newNode
     value_at_node = node._value
     if value < value_at_node:
       node._left = self._insert_rec(node._left, value)
     elif value > value_at_node:
       node._right = self._insert_rec(node._right, value)
+
+
+    node._height = self._getCorrectedHeight(node)
     return node
 
-
+  def _getCorrectedHeight(self, node):
+    if node._left is not None:
+      height_left = node._left._height
+    else:
+      height_left = 0
+    if node._right is not None:
+      height_right = node._right._height
+    else:
+      height_right = 0
+    return 1 + max(height_left, height_right)
 
   def remove_element(self, value):
     # Remove the value specified from the tree. Select the minimum
@@ -70,6 +81,7 @@ class Binary_Search_Tree:
       else:
         # this node has only right child or no child
         return node._right
+    node._height = self._getCorrectedHeight(node)
     return node
 
   # Helper method used in remove_rec to find the minimum value in the right subtree of a node having two children
@@ -172,16 +184,20 @@ class Binary_Search_Tree:
     # return an integer that represents the height of the tree.
     # assume that an empty tree has height 0 and a tree with one
     # node has height 1. This method must operate in constant time.
+  #   if self._root is None:
+  #     return 0
+  #   return self._get_height_rec(self._root)
+  # def _get_height_rec(self, node):
+  #   if node is None:
+  #     return 0
+  #   else:
+  #     left_height = self._get_height_rec(node._left)
+  #     right_height = self._get_height_rec(node._right)
+  #     return 1 + max(left_height, right_height)
     if self._root is None:
       return 0
-    return self._get_height_rec(self._root)
-  def _get_height_rec(self, node):
-    if node is None:
-      return 0
     else:
-      left_height = self._get_height_rec(node._left)
-      right_height = self._get_height_rec(node._right)
-      return 1 + max(left_height, right_height)
+      return self._root._height
 
 
   def __str__(self):
